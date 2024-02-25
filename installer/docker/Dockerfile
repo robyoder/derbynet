@@ -1,4 +1,18 @@
-## docker build -t derbynet_server -f installer/docker/Dockerfile .
+# To build:
+# docker build -t derbynet_server -f installer/docker/Dockerfile .
+
+# To run in development mode:
+# 1. Create the directory where you want uploaded files (?) to live, such as ~/Public/derbynet
+# 2. Run the following command, replacing `~/Public/derbynet` with the directory of your choosing:
+# 
+# docker run -d -p 80:80 -p 443:443 \
+#     -v ~/Public/derbynet:/var/lib/derbynet \
+#     -v /etc/localtime:/etc/localtime:ro \
+#     -v $(pwd)/website/:/var/www/html:ro \
+#     derbynet_server
+# 
+# If you aren't actively changing the site code, you can leave out the third `-v` line above,
+# and the container will use a static copy of the site files.
 
 FROM alpine
 LABEL org.opencontainers.image.authors=jeffpiazza
@@ -44,7 +58,7 @@ RUN rm -rf $WWW_ROOT/local/* $WWW_ROOT/index*.html && \
 
 # The set-timeout.sh script may be needed to prevent timeouts under automated testing.
 # Under "normal" production use, stock timeouts are probably OK.
-COPY installer/docker/alpine-* installer/docker/set-timeout.sh /usr/local/bin
+COPY installer/docker/alpine-* installer/docker/set-timeout.sh /usr/local/bin/
 
 # How large are the pictures you want to upload?  8M covers an 18-megapixel
 # photo.
