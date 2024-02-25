@@ -86,7 +86,7 @@
 
   <target name="generated" depends="banner, generated-version.inc,
                     generated-build-date.inc,
-                    release-series, generated-commit-hash.inc, quickref, webrtc-adapter"
+                    release-series, generated-commit-hash.inc, webrtc-adapter"
           description="Build generated files">
   </target>
 
